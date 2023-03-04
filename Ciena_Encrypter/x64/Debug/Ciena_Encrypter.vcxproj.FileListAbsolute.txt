@@ -1,5 +1,0 @@
-C:\Users\mjesa\OneDrive\Documents\GitHub\Hack-the-hill-2023\Ciena_Encrypter\x64\Debug\Ciena_Encrypter.vcxproj.AssemblyReference.cache
-C:\Users\mjesa\OneDrive\Documents\GitHub\Hack-the-hill-2023\Ciena_Encrypter\x64\Debug\Ciena_Encrypter.vcxproj.SuggestedBindingRedirects.cache
-C:\Users\mjesa\OneDrive\Documents\GitHub\Hack-the-hill-2023\Ciena_Encrypter\x64\Debug\Ciena_Encrypter.Form1.resources
-C:\Users\mjesa\OneDrive\Documents\GitHub\Hack-the-hill-2023\Ciena_Encrypter\x64\Debug\Ciena_Encrypter.vcxproj.GenerateResource.cache
-C:\Users\mjesa\OneDrive\Documents\GitHub\Hack-the-hill-2023\Ciena_Encrypter\x64\Debug\Ciena_Encrypter.exe
