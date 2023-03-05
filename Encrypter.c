@@ -30,8 +30,19 @@ int enc7(int i, int x, char c);
 int enc8(int i, int x, char c);
 int enc9(int i, int x, char c);
 
+int dec0(int i, int x, char c);
+int dec1(int i, int x, char c);
+int dec2(int i, int x, char c);
+int dec3(int i, int x, char c);
+int dec4(int i, int x, char c);
+int dec5(int i, int x, char c);
+int dec6(int i, int x, char c);
+int dec7(int i, int x, char c);
+int dec8(int i, int x, char c);
+int dec9(int i, int x, char c);
+
 int main(void){
-    char employee_ID[16];
+    char employee_ID[9];
     unsigned short int no_error = False;
 
     printf("Do you wish to (0) read or (1) write employee data?: ");
@@ -59,7 +70,7 @@ int main(void){
         }
     }
 
-    if(rr = 0){
+    if(rr == 0){
         get_employee_info(employee_ID);
     }
     else{
@@ -94,6 +105,8 @@ void get_employee_info(char* employee_ID){
     char file_path[32];
     FILE* fptr;
     unsigned short int no_error = False;
+    int ID[8], i, offset;
+    employee buffer;
 
     //User input
     printf("Enter path to employee data: ");
@@ -113,46 +126,197 @@ void get_employee_info(char* employee_ID){
             }
         }
     }
-
-    int ID[8];
-    employee buffer;
+    fread(&buffer, sizeof(employee), 1, fptr);
 
     for(int i = 0; i < 8; i++){
-        ID[i] = (int) employee_ID[i]/48;
+        ID[i] = ((int) employee_ID[i])-48;
     }
-    switch(ID[0]){
-        /*case 0:
-            fread(buffer, sizeof(employee), 1, fptr);
-            break;
-        case 1:
-            fread(buffer, sizeof(employee), 1, fptr);
-            break;
-        case 2:
-            fread(buffer, sizeof(employee), 1, fptr);
-            break;
-        case 3:
-            fread(buffer, sizeof(employee), 1, fptr);
-            break;
-        case 4:
-            fread(buffer, sizeof(employee), 1, fptr);
-            break;
-        case 5:
-            fread(buffer, sizeof(employee), 1, fptr);
-            break;
-        case 6:
-            fread(buffer, sizeof(employee), 1, fptr);
-            break;
-        case 7:
-            fread(buffer, sizeof(employee), 1, fptr);
-            break;
-        case 8:
-            fread(buffer, sizeof(employee), 1, fptr);
-            break;
-        case 9:
-            fread(buffer, sizeof(employee), 1, fptr);
-            break;*/
+    if(ID[0] == 0){
+        offset = 4 - strlen(buffer.last_name)%4;
+        for(i = strlen(buffer.last_name); i >=0; i--){
+            dec0((i - offset)%4, ID[i%8], buffer.last_name[i]);
+        }
+        offset = 5 - strlen(buffer.name)%4;
+        for(i = strlen(buffer.name); i >=0; i--){
+            dec0((i - offset)%4, ID[i%8], buffer.name[i]);
+        }
+        offset = 5 - strlen(buffer.adress)%4;
+        for(i = strlen(buffer.adress); i >=0; i--){
+            dec0((i - offset)%4, ID[i%8], buffer.adress[i]);
+        }
+        offset = 5 - strlen(buffer.annual_income)%4;
+        for(i = strlen(buffer.annual_income); i >=0; i--){
+            dec0((i - offset)%4, ID[i%8], buffer.annual_income[i]);
+        }
     }
-    fclose(fptr);
+    else if(ID[0] == 1){
+        offset = 4 - strlen(buffer.last_name)%4;
+        for(i = strlen(buffer.last_name); i >=0; i--){
+            printf("o%i ",buffer.last_name[i]);
+            dec1((i - offset)%4, ID[i%8], buffer.last_name[i]);
+            printf("n%i ",buffer.last_name[i]);
+        }
+        offset = 4 - strlen(buffer.name)%4;
+        for(i = strlen(buffer.name); i >=0; i--){
+            dec1((i - offset)%4, ID[i%8], buffer.name[i]);
+        }
+        offset = 4 - strlen(buffer.adress)%4;
+        for(i = strlen(buffer.adress); i >=0; i--){
+            dec1((i - offset)%4, ID[i%8], buffer.adress[i]);
+        }
+        offset = 4 - strlen(buffer.annual_income)%4;
+        for(i = strlen(buffer.annual_income); i >=0; i--){
+            dec1((i - offset)%4, ID[i%8], buffer.annual_income[i]);
+        }
+    }
+    else if(ID[0] == 2){
+        offset = 5 - strlen(buffer.last_name)%4;
+        for(i = strlen(buffer.last_name) - offset; i >=0; i--){
+            dec2(i%4, ID[i%8], buffer.last_name[i]);
+        }
+        offset = 5 - strlen(buffer.name)%4;
+        for(i = strlen(buffer.name) - offset; i >=0; i--){
+            dec2(i%4, ID[i%8], buffer.name[i]);
+        }
+        offset = 5 - strlen(buffer.adress)%4;
+        for(i = strlen(buffer.adress) - offset; i >=0; i--){
+            dec2(i%4, ID[i%8], buffer.adress[i]);
+        }
+        offset = 5 - strlen(buffer.annual_income)%4;
+        for(i = strlen(buffer.annual_income) - offset; i >=0; i--){
+            dec2(i%4, ID[i%8], buffer.annual_income[i]);
+        }
+    }
+    else if(ID[0] == 3){
+        offset = 5 - strlen(buffer.last_name)%4;
+        for(i = strlen(buffer.last_name) - offset; i >=0; i--){
+            dec3(i%4, ID[i%8], buffer.last_name[i]);
+        }
+        offset = 5 - strlen(buffer.name)%4;
+        for(i = strlen(buffer.name) - offset; i >=0; i--){
+            dec3(i%4, ID[i%8], buffer.name[i]);
+        }
+        offset = 5 - strlen(buffer.adress)%4;
+        for(i = strlen(buffer.adress) - offset; i >=0; i--){
+            dec3(i%4, ID[i%8], buffer.adress[i]);
+        }
+        offset = 5 - strlen(buffer.annual_income)%4;
+        for(i = strlen(buffer.annual_income) - offset; i >=0; i--){
+            dec3(i%4, ID[i%8], buffer.annual_income[i]);
+        }
+    }
+    else if(ID[0] == 4){
+        offset = 5 - strlen(buffer.last_name)%4;
+        for(i = strlen(buffer.last_name) - offset; i >=0; i--){
+            dec4(i%4, ID[i%8], buffer.last_name[i]);
+        }
+        offset = 5 - strlen(buffer.name)%4;
+        for(i = strlen(buffer.name) - offset; i >=0; i--){
+            dec4(i%4, ID[i%8], buffer.name[i]);
+        }
+        offset = 5 - strlen(buffer.adress)%4;
+        for(i = strlen(buffer.adress) - offset; i >=0; i--){
+            dec4(i%4, ID[i%8], buffer.adress[i]);
+        }
+        offset = 5 - strlen(buffer.annual_income)%4;
+        for(i = strlen(buffer.annual_income) - offset; i >=0; i--){
+            dec4(i%4, ID[i%8], buffer.annual_income[i]);
+        }
+    }
+    else if(ID[0] == 5){
+        offset = 4 - strlen(buffer.last_name)%4;
+        for(i = strlen(buffer.last_name) - offset; i >=0; i--){
+            dec5(i%4, ID[i%8], buffer.last_name[i]);
+        }
+        offset = 4 - strlen(buffer.name)%4;
+        for(i = strlen(buffer.name) - offset; i >=0; i--){
+            dec5(i%4, ID[i%8], buffer.name[i]);
+        }
+        offset = 4 - strlen(buffer.adress)%4;
+        for(i = strlen(buffer.adress) - offset; i >=0; i--){
+            dec5(i%4, ID[i%8], buffer.adress[i]);
+        }
+        offset = 4 - strlen(buffer.annual_income)%4;
+        for(i = strlen(buffer.annual_income) - offset; i >=0; i--){
+            dec5(i%4, ID[i%8], buffer.annual_income[i]);
+        }
+     }
+    else if(ID[0] == 6){
+        offset = 5 - strlen(buffer.last_name)%4;
+        for(i = strlen(buffer.last_name) - offset; i >=0; i--){
+            dec6(i%4, ID[i%8], buffer.last_name[i]);
+        }
+        offset = 5 - strlen(buffer.name)%4;
+        for(i = strlen(buffer.name) - offset; i >=0; i--){
+            dec6(i%4, ID[i%8], buffer.name[i]);
+        }
+        offset = 5 - strlen(buffer.adress)%4;
+        for(i = strlen(buffer.adress) - offset; i >=0; i--){
+            dec6(i%4, ID[i%8], buffer.adress[i]);
+        }
+        offset = 5 - strlen(buffer.annual_income)%4;
+        for(i = strlen(buffer.annual_income) - offset; i >=0; i--){
+            dec6(i%4, ID[i%8], buffer.annual_income[i]);
+        }
+    }
+    else if(ID[0] == 7){
+        offset = 5 - strlen(buffer.last_name)%4;
+        for(i = strlen(buffer.last_name) - offset; i >=0; i--){
+            dec7(i%4, ID[i%8], buffer.last_name[i]);
+        }
+        offset = 5 - strlen(buffer.name)%4;
+        for(i = strlen(buffer.name) - offset; i >=0; i--){
+            dec7(i%4, ID[i%8], buffer.name[i]);
+        }
+        offset = 5 - strlen(buffer.adress)%4;
+        for(i = strlen(buffer.adress) - offset; i >=0; i--){
+            dec7(i%4, ID[i%8], buffer.adress[i]);
+        }
+        offset = 5 - strlen(buffer.annual_income)%4;
+        for(i = strlen(buffer.annual_income) - offset; i >=0; i--){
+            dec7(i%4, ID[i%8], buffer.annual_income[i]);
+        }
+    }
+    else if(ID[0] == 8){
+        offset = 5 - strlen(buffer.last_name)%4;
+        for(i = strlen(buffer.last_name) - offset; i >=0; i--){
+            dec8(i%4, ID[i%8], buffer.last_name[i]);
+        }
+        offset = 5 - strlen(buffer.name)%4;
+        for(i = strlen(buffer.name) - offset; i >=0; i--){
+            dec8(i%4, ID[i%8], buffer.name[i]);
+        }
+        offset = 5 - strlen(buffer.adress)%4;
+        for(i = strlen(buffer.adress) - offset; i >=0; i--){
+            dec8(i%4, ID[i%8], buffer.adress[i]);
+        }
+        offset = 5 - strlen(buffer.annual_income)%4;
+        for(i = strlen(buffer.annual_income) - offset; i >=0; i--){
+            dec8(i%4, ID[i%8], buffer.annual_income[i]);
+        }
+    }
+    else if(ID[0] == 9){
+        offset = 5 - strlen(buffer.last_name)%4;
+        for(i = strlen(buffer.last_name) - offset; i >=0; i--){
+            dec9(i%4, ID[i%8], buffer.last_name[i]);
+        }
+        offset = 5 - strlen(buffer.name)%4;
+        for(i = strlen(buffer.name) - offset; i >=0; i--){
+            dec9(i%4, ID[i%8], buffer.name[i]);
+        }
+        offset = 5 - strlen(buffer.adress)%4;
+        for(i = strlen(buffer.adress) - offset; i >=0; i--){
+            dec9(i%4, ID[i%8], buffer.adress[i]);
+        }
+        offset = 5 - strlen(buffer.annual_income)%4;
+        for(i = strlen(buffer.annual_income) - offset; i >=0; i--){
+            dec9(i%4, ID[i%8], buffer.annual_income[i]);
+        }
+    }
+
+        printf("Full Name: %s %s\nAdress: %s\nSalary: %s", buffer.name, buffer.last_name, buffer.adress, buffer.annual_income);
+
+        fclose(fptr);
 }
 
 void put_employee_info(char* employee_ID){
@@ -182,12 +346,7 @@ void put_employee_info(char* employee_ID){
     employee buffer;
 
     printf("What is the employee's last name, name, adress, annual income? \n");
-    //scanf(" %s, %s, %s, %s", buffer.last_name, buffer.name, buffer.adress, buffer.annual_income);
-
-    strncpy(buffer.adress, "Hello", 6*sizeof(char));
-    strncpy(buffer.annual_income, "Hello", 6*sizeof(char));
-    strncpy(buffer.last_name, "Hello", 6*sizeof(char));
-    strncpy(buffer.name, "Hello", 6*sizeof(char));
+    scanf(" %s, %s, %s, %s", buffer.last_name, buffer.name, buffer.adress, buffer.annual_income);
 
     for(int i = 0; i < 8; i++){
         ID[i] = ((int) employee_ID[i])-48;
@@ -262,7 +421,7 @@ void put_employee_info(char* employee_ID){
             buffer.annual_income[i] = enc4(i%4, ID[i%8], buffer.annual_income[i]);
         }
     }
-     else if(ID[0] == 5){
+    else if(ID[0] == 5){
         for(i = 0; i < strlen(buffer.last_name);i++){
             buffer.last_name[i] = enc5(i%4, ID[i%8], buffer.last_name[i]);
         }
@@ -358,25 +517,23 @@ int enc0(int i, int x, char c){
 
 int enc1(int i, int x, char c){
     int ret = 0;
-    switch(i){
-        case 0:
-            ret = c + x;
-            break;
-        case 1:
-            ret = c * x;
-            break;
-        case 2:
-            ret = c - x;
-            break;
-        case 3:
-            ret = pow(c, x);
-            break;
+    if(i==0){
+        ret = c + x;
+    }
+    else if(i == 1){
+        ret = c * x;
+    }
+    else if(i == 1){
+        ret = c - x;
+    }
+    else if(i == 1){
+        ret = pow(c, x);
     }
     return ret;
 }
 
 int enc2(int i, int x, char c){
-        int ret = 0;
+    int ret = 0;
     switch(i){
         case 0:
             ret = c + x;
@@ -522,6 +679,196 @@ int enc9(int i, int x, char c){
             break;
         case 3:
             ret = c + x;
+            break;
+    }
+    return ret;
+}
+
+int dec0(int i, int x, char c){
+    int ret = 0;
+    switch(i){
+        case 0:
+            ret = pow(c, 1.0/x);
+            break;
+        case 1:
+            ret = c / x;
+            break;
+        case 2:
+            ret = c + x;
+            break;
+        case 3:
+            ret = c - x;
+            break;
+    }
+    return ret;
+}
+
+int dec1(int i, int x, char c){
+        int ret = 0;
+    switch(i){
+        case 0:
+            ret = pow(c, 1.0/x);
+            break;
+        case 1:
+            ret = c + x;
+            break;
+        case 2:
+            ret = c / x;
+            break;
+        case 3:
+            ret = c - x;
+            break;
+    }
+    return ret;
+}
+
+int dec2(int i, int x, char c){
+    int ret = 0;
+    switch(i){
+        case 0:
+            ret = c + x;
+            break;
+        case 1:
+            ret = pow(c, 1.0/x);
+            break;
+        case 2:
+            ret = c / x;
+            break;
+        case 3:
+            ret = c - x;
+            break;
+    }
+    return ret;
+}
+
+int dec3(int i, int x, char c){
+    int ret = 0;
+    switch(i){
+        case 0:
+            ret = c + x;
+            break;
+        case 1:
+            ret = c / x;
+            break;
+        case 2:
+            ret = pow(c, 1.0/x);
+            break;
+        case 3:
+            ret = c - x;
+            break;
+    }
+    return ret;
+}
+
+int dec4(int i, int x, char c){
+    int ret = 0;
+    switch(i){
+        case 0:
+            ret = c / x;
+            break;
+        case 1:
+            ret = pow(c, 1.0/x);
+            break;
+        case 2:
+            ret = c + x;
+            break;
+        case 3:
+            ret = c - x;
+            break;
+    }
+    return ret;
+}
+
+int dec5(int i, int x, char c){
+    int ret = 0;
+    switch(i){
+        case 0:
+            ret = c * x;
+            break;
+        case 1:
+            ret = c + x;
+            break;
+        case 2:
+            ret = pow(c, 1.0/x);
+            break;
+        case 3:
+            ret = c - x;
+            break;
+    }
+    return ret;
+}
+
+int dec6(int i, int x, char c){
+    int ret = 0;
+    switch(i){
+        case 0:
+            ret = pow(c, 1.0/x);
+            break;
+        case 1:
+            ret = c / x;
+            break;
+        case 2:
+            ret = c - x;
+            break;
+        case 3:
+            ret = c + x;
+            break;
+    }
+    return ret;
+}
+
+int dec7(int i, int x, char c){
+    int ret = 0;
+    switch(i){
+        case 0:
+            ret = c / x;
+            break;
+        case 1:
+            ret = pow(c, 1.0/x);
+            break;
+        case 2:
+            ret = c - x;
+            break;
+        case 3:
+            ret = c + x;
+            break;
+    }
+    return ret;
+}
+
+int dec8(int i, int x, char c){
+    int ret = 0;
+    switch(i){
+        case 0:
+            ret = pow(c, 1.0/x);
+            break;
+        case 1:
+            ret = c - x;
+            break;
+        case 2:
+            ret = c / x;
+            break;
+        case 3:
+            ret = c + x;
+            break;
+    }
+    return ret;
+}
+
+int dec9(int i, int x, char c){
+    int ret = 0;
+    switch(i){
+        case 0:
+            ret = c - x;
+            break;
+        case 1:
+            ret = pow(c, 1.0/x);
+            break;
+        case 2:
+            ret = c / x;
+            break;
+        case 3:
+            ret = c + x;                                                                                                                                                                                                                                                       x;
             break;
     }
     return ret;
